@@ -5,9 +5,15 @@ import (
 	"os"
 
 	"github.com/mailgun/vulcand/service"
+	"net/http"
+	_ "net/http/pprof"
 )
 
 func main() {
+	go func() {
+		fmt.Println(http.ListenAndServe("localhost:6060", nil))
+	}()
+
 	r, err := GetRegistry()
 	if err != nil {
 		fmt.Printf("Service exited with error: %s\n", err)
